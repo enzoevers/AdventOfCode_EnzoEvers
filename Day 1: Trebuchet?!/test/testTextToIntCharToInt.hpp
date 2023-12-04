@@ -1,12 +1,12 @@
-#include "gtest/gtest.h"
 #include "../include/TextToInt.hpp"
+#include "gtest/gtest.h"
 
-TEST(charToInt, belowAscii0){
+TEST(charToInt, belowAscii0) {
     int value = TextToInt::charToInt('(');
     ASSERT_EQ(value, -1);
 }
 
-TEST(charToInt, inRange){
+TEST(charToInt, inRange) {
     ASSERT_EQ(TextToInt::charToInt('0'), 0);
     ASSERT_EQ(TextToInt::charToInt('1'), 1);
     ASSERT_EQ(TextToInt::charToInt('2'), 2);
@@ -19,12 +19,12 @@ TEST(charToInt, inRange){
     ASSERT_EQ(TextToInt::charToInt('9'), 9);
 }
 
-TEST(charToInt, aboveAscii9){
+TEST(charToInt, aboveAscii9) {
     int value = TextToInt::charToInt('a');
     ASSERT_EQ(value, -1);
 }
 
-TEST(charToInt, minusSignNotCounted){
+TEST(charToInt, minusSignNotCounted) {
     int value = TextToInt::charToInt('-');
     ASSERT_EQ(value, -1);
 }

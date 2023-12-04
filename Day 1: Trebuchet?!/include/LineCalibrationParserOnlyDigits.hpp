@@ -3,7 +3,6 @@
 #include "ILineCalibrationParser.hpp"
 
 class LineCalibrationParserOnlyDigits : public ILineCalibrationParser {
-public:
-    int getCalibrationValue(std::string const & line) override;
-   
+  public:
+    int getCalibrationValue(const std::string &line) override;
 };

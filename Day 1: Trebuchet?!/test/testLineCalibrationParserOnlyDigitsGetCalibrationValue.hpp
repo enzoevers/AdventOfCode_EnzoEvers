@@ -1,7 +1,7 @@
-#include "gtest/gtest.h"
 #include "../include/LineCalibrationParserOnlyDigits.hpp"
+#include "gtest/gtest.h"
 
-TEST(getCalibrationValue, noIntegersReturnsMinus1){
+TEST(getCalibrationValue, noIntegersReturnsMinus1) {
     LineCalibrationParserOnlyDigits parser;
 
     std::string str = "jvkldnsjkhtkjfldsgnjf";
@@ -9,7 +9,7 @@ TEST(getCalibrationValue, noIntegersReturnsMinus1){
     ASSERT_EQ(value, -1);
 }
 
-TEST(getCalibrationValue, emptyStringReturnsMinus1){
+TEST(getCalibrationValue, emptyStringReturnsMinus1) {
     LineCalibrationParserOnlyDigits parser;
 
     std::string str;
@@ -17,7 +17,7 @@ TEST(getCalibrationValue, emptyStringReturnsMinus1){
     ASSERT_EQ(value, -1);
 }
 
-TEST(getCalibrationValue, singleIntegersReturnsThisTwice){
+TEST(getCalibrationValue, singleIntegersReturnsThisTwice) {
     LineCalibrationParserOnlyDigits parser;
 
     std::string str = "qwer1sdf";
@@ -33,7 +33,7 @@ TEST(getCalibrationValue, singleIntegersReturnsThisTwice){
     ASSERT_EQ(value, 55);
 }
 
-TEST(getCalibrationValue, twoIntegersReturnsTheseTwo){
+TEST(getCalibrationValue, twoIntegersReturnsTheseTwo) {
     LineCalibrationParserOnlyDigits parser;
 
     std::string str = "1qwersadf5";
@@ -53,7 +53,7 @@ TEST(getCalibrationValue, twoIntegersReturnsTheseTwo){
     ASSERT_EQ(value, 43);
 }
 
-TEST(getCalibrationValue, multipleIntegersOnlyReturnFirstAndLast){
+TEST(getCalibrationValue, multipleIntegersOnlyReturnFirstAndLast) {
     LineCalibrationParserOnlyDigits parser;
 
     std::string str = "1qwer2sa4df5";

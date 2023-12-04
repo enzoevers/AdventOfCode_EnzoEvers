@@ -3,7 +3,7 @@
 #include <string>
 
 class TextToInt {
-public:
+  public:
     static int charToInt(const char c);
-    static int stringToInt(const std::string& str);
+    static int stringToInt(const std::string &str);
 };

@@ -1,9 +1,10 @@
-#include <iostream>
 #include "include/CalibrationDataReader.hpp"
 #include "include/LineCalibrationParserOnlyDigits.hpp"
+#include <iostream>
 
-int main(int argc, char** argv) {
-    if(argc == 1){
+int
+main(int argc, char **argv) {
+    if (argc == 1) {
         std::cout << "Requires input file name" << std::endl;
         return 1;
     }
