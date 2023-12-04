@@ -1,4 +1,6 @@
+#include "testLineCalibrationParserDigitsAndWordsGetCalibrationValue.hpp"
 #include "testLineCalibrationParserOnlyDigitsGetCalibrationValue.hpp"
+#include "testStringManipulation.hpp"
 #include "testTextToIntCharToInt.hpp"
 #include "gtest/gtest.h"
 

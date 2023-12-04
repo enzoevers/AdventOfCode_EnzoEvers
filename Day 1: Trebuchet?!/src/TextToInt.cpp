@@ -13,6 +13,3 @@ TextToInt::charToInt(const char c) {
 
     return retValue;
 }
-
-int
-TextToInt::stringToInt(const std::string &str) {}

@@ -1,4 +1,5 @@
 #include "include/CalibrationDataReader.hpp"
+#include "include/LineCalibrationParserDigitsAndWords.hpp"
 #include "include/LineCalibrationParserOnlyDigits.hpp"
 #include <iostream>
 
@@ -13,8 +14,10 @@ main(int argc, char **argv) {
 
     CalibrationDataReader reader;
     LineCalibrationParserOnlyDigits parserOnlyDigits;
+    LineCalibrationParserDigitsAndWords parserDigitsAndWords;
 
     reader.getSumOfCalibrationValues(file, parserOnlyDigits);
+    reader.getSumOfCalibrationValues(file, parserDigitsAndWords);
 
     file.close();
 

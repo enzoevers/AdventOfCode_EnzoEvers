@@ -1,5 +1,3 @@
-#pragma once
-
 #include "../include/StringManipulation.hpp"
 #include <algorithm>
 #include <cctype>
@@ -12,4 +10,6 @@ StringManipulation::toLowerString(const std::string &str) {
     for (int i = 0; i < strLength; i++) {
         lowerString[i] = std::tolower(str.at(i));
     }
+
+    return lowerString;
 }
