@@ -1,7 +1,7 @@
-﻿using NamespaceInputParser;
+﻿using GameAoC;
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
-InputParser parser = new InputParser();
+Game game = new Game();
 
-parser.readFile("./input.txt");
+int answer = Game.getAnswer("./bagConstraints.txt", "./input.txt");
