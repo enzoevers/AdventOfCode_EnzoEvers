@@ -1,11 +1,5 @@
 #include <iostream>
-#include <fstream>
-
-void readFile(std::ifstream& file) {
-    for(std::string line; std::getline(file, line);){
-        std::cout << line << std::endl;
-    }
-}
+#include "src/challenge.hpp"
 
 int main(int argc, char** argv) {
     if(argc == 1){
@@ -14,8 +8,7 @@ int main(int argc, char** argv) {
     }
 
     std::ifstream file(argv[1]);
-
-    readFile(file);
+    int sum = getSumOfCalibrationValues(file);
 
     return 0;
 }
