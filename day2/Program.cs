@@ -1,7 +1,7 @@
 ﻿using GameAoC;
 
-// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
 Game game = new Game();
 
-int answer = Game.getAnswer("./bagConstraints.txt", "./input.txt");
+int answer = game.getAnswer("./bagContents.txt", "./input.txt");
+
+Console.WriteLine($"Answer: {answer}");

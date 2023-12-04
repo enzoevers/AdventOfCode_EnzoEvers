@@ -18,5 +18,33 @@ public struct RGBCount
     public int gCount { set; get; }
     public int bCount { set; get; }
 
+    public static bool operator <=(RGBCount a, RGBCount b)
+    {
+        return (a.rCount <= b.rCount)
+            && (a.gCount <= b.gCount)
+            && (a.bCount <= b.bCount);
+    }
+
+    public static bool operator >=(RGBCount a, RGBCount b)
+    {
+        return (a.rCount >= b.rCount)
+            && (a.gCount >= b.gCount)
+            && (a.bCount >= b.bCount);
+    }
+
+    public static bool operator <(RGBCount a, RGBCount b)
+    {
+        return (a.rCount < b.rCount)
+            && (a.gCount < b.gCount)
+            && (a.bCount < b.bCount);
+    }
+
+    public static bool operator >(RGBCount a, RGBCount b)
+    {
+        return (a.rCount > b.rCount)
+            && (a.gCount > b.gCount)
+            && (a.bCount > b.bCount);
+    }
+
     public override string ToString() => $"(rCount: {rCount}, gCount: {gCount}, bCount: {bCount})";
 }

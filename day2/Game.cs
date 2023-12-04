@@ -5,7 +5,7 @@ namespace GameAoC
 {
     public class Game
     {
-        public void getAnswer(in string constraintsFilePath, in string gamesFilePath)
+        public int getAnswer(in string constraintsFilePath, in string gamesFilePath)
         {
             RGBCount constraints = processConstraints(constraintsFilePath);
             return processGames(constraints, gamesFilePath);
@@ -27,9 +27,12 @@ namespace GameAoC
             {
                 string line = sr.ReadLine();
 
+                // The constraint only has a single line
                 if (line != null)
                 {
-                    constraints = parseSubset(line);
+                    // Note that the constraints file has the same layout as
+                    // a single round in a game.
+                    parseRoundInGame(line, ref constraints);
                 }
             }
             finally
@@ -52,9 +55,15 @@ namespace GameAoC
 
                 while (line != null)
                 {
-                    int gameId = parseGameId(line);
+                    string[] mainSubstring = splitGameInIdAndRound(line);
+                    int gameId = parseGameId(mainSubstring[0]);
+                    bool gameIsPossible = parseGameRounds(constraints, mainSubstring[1]);
+                    if (gameIsPossible)
+                    {
+                        Console.WriteLine($"gameId: {gameId}");
+                        sum += gameId;
+                    }
 
-                    parseSubset(line);
                     line = sr.ReadLine();
                 }
             }
@@ -66,7 +75,7 @@ namespace GameAoC
             return sum;
         }
 
-        private int parseGameId(in string line)
+        private string[] splitGameInIdAndRound(in string line)
         {
             // TODO: it is known that the game ID is near the beginning of the line.
             // Check the while string for ':' this isn't really efficient. But it's easy 
@@ -76,7 +85,15 @@ namespace GameAoC
                 throw new FormatException();
             }
 
-            string[] finerSubs = subStrings[0].Trim().Split(' ');
+            subStrings[0] = subStrings[0].Trim();
+            subStrings[1] = subStrings[1].Trim();
+
+            return subStrings;
+        }
+
+        private int parseGameId(in string gameIdString)
+        {
+            string[] finerSubs = gameIdString.Split(' ');
             if (finerSubs.Length != 2)
             {
                 throw new FormatException();
@@ -95,22 +112,39 @@ namespace GameAoC
             return gameId;
         }
 
-        private RGBCount parseSubset(in string rgbString)
+        private bool parseGameRounds(in RGBCount constraints, in string roundsString)
         {
-            string[] subStrings = rgbString.Split(',');
+            string[] rounds = roundsString.Split(';');
+
+            bool gameIsPossible = true;
 
             RGBCount rgbCount = new RGBCount();
 
-            foreach (string sub in subStrings)
+            foreach (string round in rounds)
             {
-                processSubString(sub.Trim(), ref rgbCount);
+                parseRoundInGame(round.Trim(), ref rgbCount);
+                if (!(rgbCount <= constraints))
+                {
+                    gameIsPossible = false;
+                    break;
+                }
             }
 
-            return rgbCount;
+            return gameIsPossible;
+        }
+
+        private void parseRoundInGame(in string rgbString, ref RGBCount rgbCount)
+        {
+            string[] subStrings = rgbString.Split(',');
+
+            foreach (string sub in subStrings)
+            {
+                processColorInRound(sub.Trim(), ref rgbCount);
+            }
         }
 
         // It is assumed that the whitespace around colorInfo has been trimmed
-        private void processSubString(in string colorInfo, ref RGBCount rgbCount)
+        private void processColorInRound(in string colorInfo, ref RGBCount rgbCount)
         {
             string[] finerSubs = colorInfo.Split(' ');
             if (finerSubs.Length != 2)
