@@ -11,7 +11,7 @@ TEST=$(wildcard ./test/*.cpp)
 
 app:
 	mkdir -p ${OUT_FOLDER}
-	${GXX} ${CPP_FLAGS} ${SRC} main.cpp -o ./${OUT_FOLDER}/main ${LIBS}
+	${GXX} ${CPP_FLAGS} ${SRC} main.cpp -o ./${OUT_FOLDER}/app ${LIBS}
 
 test:
 	mkdir -p ${OUT_FOLDER}

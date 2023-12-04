@@ -1,5 +1,6 @@
 #include <iostream>
-#include "src/challenge.hpp"
+#include "include/CalibrationDataReader.hpp"
+#include "include/LineCalibrationParserOnlyDigits.hpp"
 
 int main(int argc, char** argv) {
     if(argc == 1){
@@ -8,7 +9,13 @@ int main(int argc, char** argv) {
     }
 
     std::ifstream file(argv[1]);
-    int sum = getSumOfCalibrationValues(file);
+
+    CalibrationDataReader reader;
+    LineCalibrationParserOnlyDigits parserOnlyDigits;
+
+    reader.getSumOfCalibrationValues(file, parserOnlyDigits);
+
+    file.close();
 
     return 0;
 }
