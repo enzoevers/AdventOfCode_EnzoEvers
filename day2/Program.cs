@@ -2,6 +2,6 @@
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, World!");
-InputParser ip = new InputParser();
+InputParser parser = new InputParser();
 
-ip.printSomething();
+parser.readFile("./input.txt");
