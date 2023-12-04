@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "testCharToInt.hpp"
-#include "testGetCalibrationValue.hpp"
+#include "testTextToIntCharToInt.hpp"
+#include "testLineCalibrationParserOnlyDigitsGetCalibrationValue.hpp"
 
 int main(int argc, char** argv){
     ::testing::InitGoogleTest(&argc, argv);
