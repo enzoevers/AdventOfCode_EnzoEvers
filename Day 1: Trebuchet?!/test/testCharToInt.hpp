@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "main.cpp"
+#include "../src/challenge.hpp"
 
 TEST(charToInt, belowAscii0){
     int value = charToInt('(');
@@ -27,9 +27,4 @@ TEST(charToInt, aboveAscii9){
 TEST(charToInt, minusSignNotCounted){
     int value = charToInt('-');
     ASSERT_EQ(value, -1);
-}
-
-int main(int argc, char** argv){
-    ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
 }
