@@ -5,10 +5,15 @@ namespace GameAoC
 {
     public class Game
     {
-        public int getAnswer(in string constraintsFilePath, in string gamesFilePath)
+        public int getAnswerPart1(in string constraintsFilePath, in string gamesFilePath)
         {
             RGBCount constraints = processConstraints(constraintsFilePath);
-            return processGames(constraints, gamesFilePath);
+            return processGamesPart1(constraints, gamesFilePath);
+        }
+
+        public int getAnswerPart2(in string gamesFilePath)
+        {
+            return processGamesPart2(gamesFilePath);
         }
 
         private RGBCount processConstraints(in string constraintsFilePath)
@@ -44,7 +49,7 @@ namespace GameAoC
             return constraints;
         }
 
-        private int processGames(in RGBCount constraints, in string gamesFilePath)
+        private int processGamesPart1(in RGBCount constraints, in string gamesFilePath)
         {
             int sum = 0;
 
@@ -57,10 +62,9 @@ namespace GameAoC
                 {
                     string[] mainSubstring = splitGameInIdAndRound(line);
                     int gameId = parseGameId(mainSubstring[0]);
-                    bool gameIsPossible = parseGameRounds(constraints, mainSubstring[1]);
+                    bool gameIsPossible = isGamePossible(constraints, mainSubstring[1]);
                     if (gameIsPossible)
                     {
-                        Console.WriteLine($"gameId: {gameId}");
                         sum += gameId;
                     }
 
@@ -73,6 +77,35 @@ namespace GameAoC
             }
 
             return sum;
+        }
+
+        private int processGamesPart2(in string gamesFilePath)
+        {
+            int sum = 0;
+
+            StreamReader sr = new StreamReader(gamesFilePath);
+            try
+            {
+                string line = sr.ReadLine();
+
+                while (line != null)
+                {
+                    string[] mainSubstring = splitGameInIdAndRound(line);
+
+                    RGBCount rgbCount = new RGBCount();
+                    getMinimumCubesRequiredForRound(mainSubstring[1], ref rgbCount);
+                    sum += rgbCount.Power();
+
+                    line = sr.ReadLine();
+                }
+            }
+            finally
+            {
+                sr.Close();
+            }
+
+            return sum;
+
         }
 
         private string[] splitGameInIdAndRound(in string line)
@@ -89,6 +122,11 @@ namespace GameAoC
             subStrings[1] = subStrings[1].Trim();
 
             return subStrings;
+        }
+
+        private string[] splitGameInRounds(in string rounds)
+        {
+            return rounds.Split(';');
         }
 
         private int parseGameId(in string gameIdString)
@@ -112,11 +150,24 @@ namespace GameAoC
             return gameId;
         }
 
-        private bool parseGameRounds(in RGBCount constraints, in string roundsString)
+        private void getMinimumCubesRequiredForRound(in string roundsString, ref RGBCount rgbCount)
         {
-            string[] rounds = roundsString.Split(';');
+            string[] rounds = splitGameInRounds(roundsString);
 
+            foreach (string round in rounds)
+            {
+                RGBCount parsedRgbCount = new RGBCount();
+                parseRoundInGame(round.Trim(), ref parsedRgbCount);
+                rgbCount = RGBCount.mergeMax(parsedRgbCount, rgbCount);
+            }
+
+        }
+
+        private bool isGamePossible(in RGBCount constraints, in string roundsString)
+        {
             bool gameIsPossible = true;
+
+            string[] rounds = splitGameInRounds(roundsString);
 
             RGBCount rgbCount = new RGBCount();
 

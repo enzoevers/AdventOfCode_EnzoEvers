@@ -18,32 +18,48 @@ public struct RGBCount
     public int gCount { set; get; }
     public int bCount { set; get; }
 
-    public static bool operator <=(RGBCount a, RGBCount b)
+    public static bool operator <=(in RGBCount a, in RGBCount b)
     {
         return (a.rCount <= b.rCount)
             && (a.gCount <= b.gCount)
             && (a.bCount <= b.bCount);
     }
 
-    public static bool operator >=(RGBCount a, RGBCount b)
+    public static bool operator >=(in RGBCount a, in RGBCount b)
     {
         return (a.rCount >= b.rCount)
             && (a.gCount >= b.gCount)
             && (a.bCount >= b.bCount);
     }
 
-    public static bool operator <(RGBCount a, RGBCount b)
+    public static bool operator <(in RGBCount a, in RGBCount b)
     {
         return (a.rCount < b.rCount)
             && (a.gCount < b.gCount)
             && (a.bCount < b.bCount);
     }
 
-    public static bool operator >(RGBCount a, RGBCount b)
+    public static bool operator >(in RGBCount a, in RGBCount b)
     {
         return (a.rCount > b.rCount)
             && (a.gCount > b.gCount)
             && (a.bCount > b.bCount);
+    }
+
+    public static RGBCount mergeMax(in RGBCount a, in RGBCount b)
+    {
+        RGBCount rgbCountMerged = new RGBCount(
+            Math.Max(a.rCount, b.rCount),
+            Math.Max(a.gCount, b.gCount),
+            Math.Max(a.bCount, b.bCount)
+        );
+
+        return rgbCountMerged;
+    }
+
+    public int Power()
+    {
+        return (rCount * gCount * bCount);
     }
 
     public override string ToString() => $"(rCount: {rCount}, gCount: {gCount}, bCount: {bCount})";
