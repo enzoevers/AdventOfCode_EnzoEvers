@@ -13,7 +13,7 @@ TEST(SchematicReader_constructor, sizeIsSetCorrectlyForTestSchematic0) {
     FileReader fileReader(absolutePath);
     SchematicReader reader(fileReader);
 
-    auto schematicDimensions = reader.getSchematicDimensions();
+    auto schematicDimensions = reader.getFileDimensionsNoNewlines();
     ASSERT_EQ(schematicDimensions.first, 8);
     ASSERT_EQ(schematicDimensions.second, 3);
 }
