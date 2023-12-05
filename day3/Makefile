@@ -1,9 +1,8 @@
 OUT_FOLDER=out
 GXX=g++
-GOOGLE_TEST_INCLUDE=/usr/local/include
-CPP_FLAGS=-std=c++20 -g -Wall -Wextra -I $(GOOGLE_TEST_INCLUDE)
+CPP_FLAGS=-std=c++20 -g -Wall -Wextra -I /usr/local/include
 LIBS=
-LIBS_TEST=-L/usr/local/lib -lgtest -lpthread
+LIBS_TEST=-L/usr/local/lib -lgtest -lgmock -lpthread
 SRC=$(wildcard ./src/*.cpp)
 TEST=$(wildcard ./test/*.cpp)
 

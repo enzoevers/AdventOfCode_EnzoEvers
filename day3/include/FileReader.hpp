@@ -12,6 +12,8 @@ class FileReader : public IFileReader {
     FileReader(const std::string &newfilePath);
     ~FileReader();
 
+    std::size_t getLineCount() override;
+
     bool getNextLine(std::string &dst) override;
 
     void goToLine(std::size_t lineNumber) override;

@@ -23,10 +23,15 @@ SchematicReader::assignSchematicDimensions() {
     // One line was already read
     size_t n = 1;
     while (fileReader.getNextLine(dummyString)) {
+        if (dummyString.length() != schematicDimensions.first) {
+            throw std::length_error("Error: not all lines are the same length");
+        }
         n++;
     }
 
     schematicDimensions.second = n;
+
+    fileReader.goToLine(0);
 }
 
 void
@@ -61,11 +66,15 @@ SchematicReader::getBlock(const MatrixCoordinate &topLeftCoordinate,
     }
 }
 
-void
+bool
 SchematicReader::getReadingAndPaddingColumns(
     const MatrixCoordinate &topLeftCoordinate,
     std::pair<std::size_t, std::size_t> blockSize, std::size_t &readingColumns,
     std::size_t &paddingColumns) {
+
+    if (topLeftCoordinate.x >= schematicDimensions.first) {
+        return false;
+    }
 
     std::size_t columnsToTheRightIfStartingPositionIncludingStart =
         schematicDimensions.first - topLeftCoordinate.x;
@@ -73,7 +82,11 @@ SchematicReader::getReadingAndPaddingColumns(
     if ((topLeftCoordinate.x + blockSize.first) >
         columnsToTheRightIfStartingPositionIncludingStart) {
         readingColumns = columnsToTheRightIfStartingPositionIncludingStart;
+    } else {
+        readingColumns = blockSize.first;
     }
 
     paddingColumns = blockSize.first - readingColumns;
+
+    return true;
 }

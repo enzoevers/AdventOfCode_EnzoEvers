@@ -6,6 +6,8 @@ class IFileReader {
   public:
     virtual ~IFileReader(){};
 
+    virtual std::size_t getLineCount() = 0;
+
     virtual bool getNextLine(std::string &dst) = 0;
 
     virtual void goToLine(std::size_t lineNumber) = 0;
