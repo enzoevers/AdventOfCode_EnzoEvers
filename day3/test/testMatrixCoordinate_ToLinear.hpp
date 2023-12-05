@@ -1,8 +1,6 @@
 #include "../include/MatrixCoordinate.hpp"
 #include "gtest/gtest.h"
 
-TEST(MatrixCoordinate_toLinear, throwsIfCoordinateOutOfBounds) {}
-
 TEST(MatrixCoordinate_toLinear,
      returnsCorrectLinearIndexForZeroZeroCoordinate) {
 

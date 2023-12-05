@@ -1,16 +1,15 @@
 #pragma once
 
+#include "./IFileReader.hpp"
 #include "./MatrixCoordinate.hpp"
-#include <array>
-#include <fstream>
+
 #include <string>
 #include <utility>
+#include <vector>
 
-template <std::size_t blockWidth, std::size_t blockHeight>
 class SchematicReader {
   private:
-    const std::string filePath;
-    std::ifstream stream;
+    IFileReader &fileReader;
 
     /*
      * first: width
@@ -25,15 +24,21 @@ class SchematicReader {
     void assignSchematicDimensions();
 
   public:
-    SchematicReader(const std::string &filePath);
-    ~SchematicReader();
+    SchematicReader(IFileReader &fileReader);
 
     /*
      * If the the block would go out of range of the schematic,
      * this space is filles with '.'
      */
-    std::array<char, (blockWidth * blockHeight)>
-    getBlock(MatrixCoordinate &topLeftCoordinate);
+    void getBlock(const MatrixCoordinate &topLeftCoordinate,
+                  std::vector<char> &block,
+                  std::pair<std::size_t, std::size_t> blockSize);
+
+    void
+    getReadingAndPaddingColumns(const MatrixCoordinate &topLeftCoordinate,
+                                std::pair<std::size_t, std::size_t> blockSize,
+                                std::size_t &readingColumns,
+                                std::size_t &paddingColumns);
 
     std::pair<std::size_t, std::size_t> getSchematicDimensions() {
         return schematicDimensions;

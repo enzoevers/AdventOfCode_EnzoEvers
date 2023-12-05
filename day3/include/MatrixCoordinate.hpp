@@ -17,5 +17,6 @@ class MatrixCoordinate {
      * Throws an out_of_range error if the coordinates would be larger than
      * srcDimensions.
      */
-    std::size_t toLinear(std::pair<std::size_t, std::size_t> srcDimensions);
+    std::size_t
+    toLinear(std::pair<std::size_t, std::size_t> srcDimensions) const;
 };
