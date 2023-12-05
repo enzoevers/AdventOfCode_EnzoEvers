@@ -1,5 +1,6 @@
 #include "../include/FileReader.hpp"
 #include <iostream>
+#include <vector>
 
 FileReader::FileReader(const std::string &newfilePath) : filePath(newfilePath) {
     stream.open(filePath, std::ifstream::in);
@@ -47,7 +48,19 @@ FileReader::goToLine(std::size_t lineNumber) {
 
 void
 FileReader::readPartOfFile(std::size_t startIndex, std::size_t count,
-                           std::string &dst) {}
+                           std::string &dst) {
+
+    // TODO: Some more constraint checks
+
+    stream.clear();
+    stream.seekg(startIndex, stream.beg);
+
+    std::vector<char> tmpArray(count);
+
+    stream.read(tmpArray.data(), count);
+
+    dst = std::string(tmpArray.begin(), tmpArray.end());
+}
 void
 FileReader::readPartOfFile(std::size_t column, std::size_t row,
                            std::size_t count, std::string &dst) {}

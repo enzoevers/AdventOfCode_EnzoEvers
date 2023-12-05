@@ -30,7 +30,7 @@ class SchematicReader {
      * If the the block would go out of range of the schematic,
      * this space is filles with '.'
      */
-    void getBlock(const MatrixCoordinate &topLeftCoordinate,
+    bool getBlock(const MatrixCoordinate &topLeftCoordinate,
                   std::vector<char> &block,
                   std::pair<std::size_t, std::size_t> blockSize);
 

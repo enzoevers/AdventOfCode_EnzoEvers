@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../include/FileReader.hpp"
 #include "../include/SchematicReader.hpp"
 #include "gtest/gtest.h"

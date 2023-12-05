@@ -34,7 +34,7 @@ SchematicReader::assignSchematicDimensions() {
     fileReader.goToLine(0);
 }
 
-void
+bool
 SchematicReader::getBlock(const MatrixCoordinate &topLeftCoordinate,
                           std::vector<char> &block,
                           std::pair<std::size_t, std::size_t> blockSize) {
@@ -53,15 +53,53 @@ SchematicReader::getBlock(const MatrixCoordinate &topLeftCoordinate,
 
     std::size_t readingColumns;
     std::size_t paddingColumns;
+    bool success = getReadingAndPaddingColumns(topLeftCoordinate, blockSize,
+                                               readingColumns, paddingColumns);
 
-    getReadingAndPaddingColumns(topLeftCoordinate, blockSize, readingColumns,
-                                paddingColumns);
+    if (!success) {
+        return false;
+    }
 
     std::size_t readingRows;
     std::size_t paddingRows;
+    success = getReadingAndPaddingRows(topLeftCoordinate, blockSize,
+                                       readingRows, paddingRows);
 
-    getReadingAndPaddingRows(topLeftCoordinate, blockSize, readingRows,
-                             paddingRows);
+    if (!success) {
+        return false;
+    }
+
+    std::string rowEndPadding(paddingColumns, '.');
+
+    auto tmpSchematicDimensions = schematicDimensions;
+    // The +1 is to take into account the new line character
+    tmpSchematicDimensions.first++;
+
+    auto tmpCoordinate = topLeftCoordinate;
+
+    std::size_t r = 0;
+    for (; r < readingRows; r++) {
+
+        std::size_t startIndex = tmpCoordinate.toLinear(tmpSchematicDimensions);
+        tmpCoordinate.y++;
+
+        std::string dstString;
+
+        fileReader.readPartOfFile(startIndex, readingColumns, dstString);
+
+        std::copy(dstString.begin(), dstString.end(),
+                  std::back_inserter(block));
+
+        std::copy(rowEndPadding.begin(), rowEndPadding.end(),
+                  std::back_inserter(block));
+    }
+
+    if (paddingRows > 0) {
+        std::string completeRowPadding(paddingRows * schematicDimensions.first,
+                                       '.');
+        std::copy(completeRowPadding.begin(), completeRowPadding.end(),
+                  std::back_inserter(block));
+    }
 }
 
 bool
@@ -77,7 +115,8 @@ SchematicReader::getReadingAndPaddingColumns(
     std::size_t columnsToTheRightOfStartingPositionIncludingStart =
         schematicDimensions.first - topLeftCoordinate.x;
 
-    if ((topLeftCoordinate.x + blockSize.first) >
+    // A -1 because the starting point also counts
+    if ((topLeftCoordinate.x + blockSize.first - 1) >
         columnsToTheRightOfStartingPositionIncludingStart) {
         readingColumns = columnsToTheRightOfStartingPositionIncludingStart;
     } else {
@@ -102,7 +141,8 @@ SchematicReader::getReadingAndPaddingRows(
     std::size_t rowsToTheBottomOfStartingPositionIncludingStart =
         schematicDimensions.second - topLeftCoordinate.y;
 
-    if ((topLeftCoordinate.y + blockSize.second) >
+    // A -1 because the starting point also counts
+    if ((topLeftCoordinate.y + blockSize.second - 1) >
         rowsToTheBottomOfStartingPositionIncludingStart) {
         readingRows = rowsToTheBottomOfStartingPositionIncludingStart;
     } else {
