@@ -95,11 +95,13 @@ SchematicReader::getBlock(const MatrixCoordinate &topLeftCoordinate,
     }
 
     if (paddingRows > 0) {
-        std::string completeRowPadding(paddingRows * schematicDimensions.first,
-                                       '.');
+        std::string completeRowPadding(paddingRows * blockSize.first, '.');
+
         std::copy(completeRowPadding.begin(), completeRowPadding.end(),
                   std::back_inserter(block));
     }
+
+    return true;
 }
 
 bool

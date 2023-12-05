@@ -55,7 +55,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfSrcDimensionsIsZeroZero) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -70,7 +71,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfSrcDimensionsIsZeroZero) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -88,7 +90,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfXGteWidth) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -102,7 +105,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfXGteWidth) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -120,7 +124,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfYGteWidth) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -134,7 +139,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfYGteWidth) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -152,7 +158,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfXAndYGteWidth) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
@@ -167,7 +174,8 @@ TEST(MatrixCoordinate_toLinear, throwsIfXAndYGteWidth) {
                 coordinate.toLinear(srcDimensions);
             } catch (const std::out_of_range &e) {
                 // and this tests that it has the correct message
-                EXPECT_STREQ("Coordinates out of range for size", e.what());
+                EXPECT_STREQ("Error: Coordinates out of range for size",
+                             e.what());
                 throw;
             }
         },
