@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../include/MatrixCoordinate.hpp"
 #include "gtest/gtest.h"
 

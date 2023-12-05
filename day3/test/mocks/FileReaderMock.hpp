@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../include/IFileReader.hpp"
 #include "gmock/gmock.h"
 

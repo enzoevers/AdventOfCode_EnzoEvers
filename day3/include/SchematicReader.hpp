@@ -40,6 +40,11 @@ class SchematicReader {
                                 std::size_t &readingColumns,
                                 std::size_t &paddingColumns);
 
+    bool getReadingAndPaddingRows(const MatrixCoordinate &topLeftCoordinate,
+                                  std::pair<std::size_t, std::size_t> blockSize,
+                                  std::size_t &readingRows,
+                                  std::size_t &paddingRows);
+
     std::pair<std::size_t, std::size_t> getSchematicDimensions() {
         return schematicDimensions;
     }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../include/SchematicReader.hpp"
 #include "./mocks/FileReaderMock.hpp"
 #include "gtest/gtest.h"
@@ -135,11 +137,40 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
 }
 
 TEST(SchematicReader_getReadingAndPaddingColumns,
+     returnsTrueIfStartingCoordinateOnLastColumn) {
+
+    FileReaderMock fileReaderMock("tmp");
+
+    MatrixCoordinate topLeftCoordinate(8, 0);
+    std::pair<std::size_t, std::size_t> blockSize(5, 5);
+    std::string rowString = "123456789";
+
+    EXPECT_CALL(fileReaderMock, getNextLine(_))
+        .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
+                                 testing::Return(true)))
+        .WillRepeatedly(testing::Return(false));
+
+    EXPECT_CALL(fileReaderMock, goToLine(0));
+
+    SchematicReader reader(fileReaderMock);
+
+    std::size_t readingColumns;
+    std::size_t paddingColumns;
+
+    bool ret = reader.getReadingAndPaddingColumns(
+        topLeftCoordinate, blockSize, readingColumns, paddingColumns);
+
+    ASSERT_TRUE(ret);
+    ASSERT_EQ(readingColumns, 1);
+    ASSERT_EQ(paddingColumns, 4);
+}
+
+TEST(SchematicReader_getReadingAndPaddingColumns,
      returnsFalseIfStartingCoordinateOutsideOfSchematic) {
 
     FileReaderMock fileReaderMock("tmp");
 
-    MatrixCoordinate topLeftCoordinate(10, 0);
+    MatrixCoordinate topLeftCoordinate(74, 0);
     std::pair<std::size_t, std::size_t> blockSize(5, 5);
     std::string rowString = "123456789";
 

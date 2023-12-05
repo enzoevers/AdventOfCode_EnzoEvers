@@ -51,19 +51,17 @@ SchematicReader::getBlock(const MatrixCoordinate &topLeftCoordinate,
 
     block.clear();
 
-    for (std::size_t i = 0; i < blockSize.second; i++) {
+    std::size_t readingColumns;
+    std::size_t paddingColumns;
 
-        std::size_t linearStartIndex =
-            topLeftCoordinate.toLinear(schematicDimensions);
+    getReadingAndPaddingColumns(topLeftCoordinate, blockSize, readingColumns,
+                                paddingColumns);
 
-        std::size_t readingColumns;
-        std::size_t paddingColumns;
+    std::size_t readingRows;
+    std::size_t paddingRows;
 
-        getReadingAndPaddingColumns(topLeftCoordinate, blockSize,
-                                    readingColumns, paddingColumns);
-
-        // stream.seekg(linearStartIndex);
-    }
+    getReadingAndPaddingRows(topLeftCoordinate, blockSize, readingRows,
+                             paddingRows);
 }
 
 bool
@@ -76,17 +74,42 @@ SchematicReader::getReadingAndPaddingColumns(
         return false;
     }
 
-    std::size_t columnsToTheRightIfStartingPositionIncludingStart =
+    std::size_t columnsToTheRightOfStartingPositionIncludingStart =
         schematicDimensions.first - topLeftCoordinate.x;
 
     if ((topLeftCoordinate.x + blockSize.first) >
-        columnsToTheRightIfStartingPositionIncludingStart) {
-        readingColumns = columnsToTheRightIfStartingPositionIncludingStart;
+        columnsToTheRightOfStartingPositionIncludingStart) {
+        readingColumns = columnsToTheRightOfStartingPositionIncludingStart;
     } else {
         readingColumns = blockSize.first;
     }
 
     paddingColumns = blockSize.first - readingColumns;
+
+    return true;
+}
+
+bool
+SchematicReader::getReadingAndPaddingRows(
+    const MatrixCoordinate &topLeftCoordinate,
+    std::pair<std::size_t, std::size_t> blockSize, std::size_t &readingRows,
+    std::size_t &paddingRows) {
+
+    if (topLeftCoordinate.y >= schematicDimensions.second) {
+        return false;
+    }
+
+    std::size_t rowsToTheBottomOfStartingPositionIncludingStart =
+        schematicDimensions.second - topLeftCoordinate.y;
+
+    if ((topLeftCoordinate.y + blockSize.second) >
+        rowsToTheBottomOfStartingPositionIncludingStart) {
+        readingRows = rowsToTheBottomOfStartingPositionIncludingStart;
+    } else {
+        readingRows = blockSize.second;
+    }
+
+    paddingRows = blockSize.second - readingRows;
 
     return true;
 }
