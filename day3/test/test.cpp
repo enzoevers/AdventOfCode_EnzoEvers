@@ -1,3 +1,4 @@
+#include "testMatrixCoordinateToLinear.hpp"
 #include "gtest/gtest.h"
 
 int

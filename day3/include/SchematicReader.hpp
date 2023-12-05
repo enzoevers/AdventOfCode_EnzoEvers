@@ -1,16 +1,27 @@
 #pragma once
 
+#include "./MatrixCoordinate.hpp"
 #include <array>
 #include <fstream>
 #include <string>
 #include <utility>
 
 template <std::size_t blockWidth, std::size_t blockHeight>
-class SchematicReader : public ICoordinateHelper {
+class SchematicReader {
   private:
+    const std::string filePath;
     std::ifstream stream;
+
+    /*
+     * first: width
+     * second: height
+     */
     std::pair<std::size_t, std::size_t> schematicDimensions;
 
+    /*
+     * It is assumed that the schematic is a rectangle. Meaning that
+     * it is assumed that all lines have the same width.
+     */
     void assignSchematicDimensions();
 
   public:
@@ -22,13 +33,9 @@ class SchematicReader : public ICoordinateHelper {
      * this space is filles with '.'
      */
     std::array<char, (blockWidth * blockHeight)>
-    getBlock(std::pair<std::size_t, std::size_t> topLeftCoordinate);
+    getBlock(MatrixCoordinate &topLeftCoordinate);
 
-    std::size_t getBlockLengthAndWidth() { return blockLengthAndWidth; }
-
-    //--------------------
-    // ICoordinateHelper
-    //--------------------
-    std::size_t coordiate2dToLinear(
-        std::pair<std::size_t, std::size_t> coordinate) override;
+    std::pair<std::size_t, std::size_t> getSchematicDimensions() {
+        return schematicDimensions;
+    }
 };

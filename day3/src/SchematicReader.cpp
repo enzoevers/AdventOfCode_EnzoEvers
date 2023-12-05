@@ -2,41 +2,42 @@
 
 #include <stdexcept>
 
-template <std::size_t blockWidth, std::size_t blockHeight>
-SchematicReader<blockWidth, blockHeight>::SchematicReader(
-    const std::string &filePath) {
+template <std::size_t BW, std::size_t BH>
+SchematicReader<BW, BH>::SchematicReader(const std::string &filePath)
+    : filePath(filePath) {
     stream = new std::ifstream(filePath, std::ifstream::in);
 
     if (!stream.is_open()) {
-        throw std::runtime_error(
-            std::format("Error: failed to open filestream for {}", filePath));
+        throw std::runtime_error("Error: failed to open ifstream");
     }
 
     assignSchematicDimensions();
 }
 
-template <std::size_t blockWidth, std::size_t blockHeight>
+template <std::size_t BW, std::size_t BH>
 void
-SchematicReader<blockWidth, blockHeight>::assignSchematicDimensions() {
-    size_t n = 0;
-    while (std::getline(stream, string)) {
+SchematicReader<BW, BH>::assignSchematicDimensions() {
+    std::string dummyString;
+    if (std::getline(stream, dummyString)) {
+        schematicDimensions.first = dummyString.length;
+    } else {
+        throw std::runtime_error("Error: expected at least one line");
+    }
+
+    // One line was already read
+    size_t n = 1;
+    while (std::getline(stream, dummyString)) {
         n++;
     }
+
+    schematicDimensions.second = n;
 }
 
-template <std::size_t blockWidth, std::size_t blockHeight>
-SchematicReader<blockWidth, blockHeight>::~SchematicReader() {
+template <std::size_t BW, std::size_t BH>
+SchematicReader<BW, BH>::~SchematicReader() {
     stream.close();
 }
 
-template <std::size_t blockWidth, std::size_t blockHeight>
-std::array<char, (blockWidth * blockHeight)>
-SchematicReader<blockWidth, blockHeight>::getBlock(
-    std::pair<std::size_t, std::size_t> topLeftCoordinate) {}
-
-template <std::size_t blockWidth, std::size_t blockHeight>
-std::size_t
-SchematicReader<blockWidth, blockHeight>::coordiate2dToLinear(
-    std::pair<std::size_t, std::size_t> coordinate) {
-    return
-}
+template <std::size_t BW, std::size_t BH>
+std::array<char, (BW * BH)>
+SchematicReader<BW, BH>::getBlock(MatrixCoordinate &topLeftCoordinate) {}

@@ -1,7 +1,7 @@
 OUT_FOLDER=out
 GXX=g++
 GOOGLE_TEST_INCLUDE=/usr/local/include
-CPP_FLAGS=-std=c++17 -g -Wall -Wextra -I $(GOOGLE_TEST_INCLUDE)
+CPP_FLAGS=-std=c++20 -g -Wall -Wextra -I $(GOOGLE_TEST_INCLUDE)
 LIBS=
 LIBS_TEST=-L/usr/local/lib -lgtest -lpthread
 SRC=$(wildcard ./src/*.cpp)
