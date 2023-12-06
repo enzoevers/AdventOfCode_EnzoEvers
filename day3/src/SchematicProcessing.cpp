@@ -129,9 +129,6 @@ SchematicProcessing::processSchematic() {
     std::size_t currentLineOfInterest = 1;
 
     for (std::size_t r = 0; r < schematicDimensions.second; r++) {
-        std::cout << "currentLineOfInterest: " << currentLineOfInterest
-                  << std::endl;
-        printBuffer(buffer);
         for (std::size_t c = 0; c < schematicDimensions.first; c++) {
 
             std::size_t curCharIndex = c + 1;
@@ -139,8 +136,6 @@ SchematicProcessing::processSchematic() {
 
             if (curChar != ignoreCharacter &&
                 TextToInt::charToInt(curChar) == -1) {
-
-                std::cout << "curChar: " << curChar << std::endl;
                 processNumbersAroundSymbol(buffer, blacklistBuffer,
                                            currentLineOfInterest, curCharIndex);
             }
@@ -170,57 +165,18 @@ SchematicProcessing::processNumbersAroundSymbol(
     const std::array<std::string, 3> &buffer,
     std::array<std::vector<bool>, 3> &blacklistBuffer,
     std::size_t currentLineIndex, std::size_t symbolIndex) {
-    // Process current line
-    std::size_t curColumn = symbolIndex - 1;
-    if (!blacklistBuffer.at(currentLineIndex).at(curColumn) &&
-        TextToInt::charToInt(buffer.at(currentLineIndex).at(curColumn)) != -1) {
-        int num =
-            findCompleteNumber(buffer.at(currentLineIndex),
-                               blacklistBuffer.at(currentLineIndex), curColumn);
-        runningSum += num;
 
-        std::cout << "num: " << num << std::endl;
-        printBlacklist(blacklistBuffer);
-    }
-    curColumn = symbolIndex + 1;
-    if (!blacklistBuffer.at(currentLineIndex).at(curColumn) &&
-        TextToInt::charToInt(buffer.at(currentLineIndex).at(curColumn)) != -1) {
-        int num =
-            findCompleteNumber(buffer.at(currentLineIndex),
-                               blacklistBuffer.at(currentLineIndex), curColumn);
-        runningSum += num;
+    for (std::size_t r = 0; r < 3; r++) {
+        for (std::size_t c = 0; c < 3; c++) {
+            std::size_t curColumn = symbolIndex + c - 1;
 
-        std::cout << "num: " << num << std::endl;
-        printBlacklist(blacklistBuffer);
-    }
+            if (!blacklistBuffer.at(r).at(curColumn) &&
+                TextToInt::charToInt(buffer.at(r).at(curColumn)) != -1) {
 
-    // Process line above
-    std::size_t curLine = indexAboveCurrent(currentLineIndex);
-    for (std::size_t i = 0; i < 3; i++) {
-        curColumn = symbolIndex + i - 1;
-        if (!blacklistBuffer.at(curLine).at(curColumn) &&
-            TextToInt::charToInt(buffer.at(curLine).at(curColumn)) != -1) {
-            int num = findCompleteNumber(
-                buffer.at(curLine), blacklistBuffer.at(curLine), curColumn);
-            runningSum += num;
-
-            std::cout << "num: " << num << std::endl;
-            printBlacklist(blacklistBuffer);
-        }
-    }
-
-    // Process line below
-    curLine = indexBelowCurrent(currentLineIndex);
-    for (std::size_t i = 0; i < 3; i++) {
-        std::size_t curColumn = symbolIndex + i - 1;
-        if (!blacklistBuffer.at(curLine).at(curColumn) &&
-            TextToInt::charToInt(buffer.at(curLine).at(curColumn)) != -1) {
-            int num = findCompleteNumber(
-                buffer.at(curLine), blacklistBuffer.at(curLine), curColumn);
-            runningSum += num;
-
-            std::cout << "num: " << num << std::endl;
-            printBlacklist(blacklistBuffer);
+                int num = findCompleteNumber(buffer.at(r),
+                                             blacklistBuffer.at(r), curColumn);
+                runningSum += num;
+            }
         }
     }
 }
