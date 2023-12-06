@@ -23,11 +23,11 @@ main(int argc, char **argv) {
         almanac.parseAlmanac(buffer);
     }
 
-    const std::vector<int> &seedIds = almanac.getSeedIds();
+    const std::vector<uint64_t> &seedIds = almanac.getSeedIds();
 
-    int minLocation = std::numeric_limits<int>::max();
-    for (int s : seedIds) {
-        int location = almanac.getLocationFromSeed(s);
+    uint64_t minLocation = std::numeric_limits<uint64_t>::max();
+    for (uint64_t s : seedIds) {
+        uint64_t location = almanac.getLocationFromSeed(s);
 
         if (location < minLocation) {
             minLocation = location;

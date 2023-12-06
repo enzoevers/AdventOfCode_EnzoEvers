@@ -5,7 +5,7 @@
 
 class Almanac {
   private:
-    std::vector<int> seedIds;
+    std::vector<uint64_t> seedIds;
     MultiMap seedToSoil;
     MultiMap soilToFertilizer;
     MultiMap fertilizerToWater;
@@ -15,8 +15,10 @@ class Almanac {
     MultiMap humidityToLocation;
 
   public:
-    const std::vector<int> &getSeedIds() const { return seedIds; }
+    const std::vector<uint64_t> &getSeedIds() const { return seedIds; }
 
     void parseAlmanac(std::stringstream &almanacString);
-    int getLocationFromSeed(int seedId);
+    uint64_t getLocationFromSeed(uint64_t seedId);
+
+    void parseSeedsFromAlmanac(const std::string &line);
 };

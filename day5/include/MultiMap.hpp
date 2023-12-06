@@ -9,8 +9,8 @@ struct MultiMap {
      */
     std::vector<Mapping> mappings;
 
-    int map(int srcId) {
-        int dstId = srcId;
+    uint64_t map(uint64_t srcId) {
+        uint64_t dstId = srcId;
 
         for (auto it = mappings.begin(); it < mappings.end(); it++) {
             if (it->isInMappedRange(srcId)) {
