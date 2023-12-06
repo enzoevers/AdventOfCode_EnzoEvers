@@ -1,7 +1,7 @@
 #include "../include/Almanac.hpp"
 
 void
-Almanac::parseAlmanac(const std::string &almanacString) {}
+Almanac::parseAlmanac(std::stringstream &almanacString) {}
 
 int
 Almanac::getLocationFromSeed(int seedId) {}

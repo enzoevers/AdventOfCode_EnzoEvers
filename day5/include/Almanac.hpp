@@ -1,6 +1,7 @@
 #pragma once
 
 #include "./MultiMap.hpp"
+#include <sstream>
 
 class Almanac {
   private:
@@ -14,6 +15,8 @@ class Almanac {
     MultiMap humidityToLocation;
 
   public:
-    void parseAlmanac(const std::string &almanacString);
+    const std::vector<int> &getSeedIds() const { return seedIds; }
+
+    void parseAlmanac(std::stringstream &almanacString);
     int getLocationFromSeed(int seedId);
 };
