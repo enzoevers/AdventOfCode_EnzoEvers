@@ -166,6 +166,13 @@ SchematicProcessing::processNumbersAroundSymbol(
     std::array<std::vector<bool>, 3> &blacklistBuffer,
     std::size_t currentLineIndex, std::size_t symbolIndex) {
 
+    // Note that this isn't the most optimal with regard to caching
+    // since the last read line is always the currentLineIndex while
+    // this loop simply starts at line 0.
+    //
+    // Also, the symbol character is checked twice over the whole process.
+    // Once in this loop and once before this function
+    // (processNumbersAroundSymbol) is called.
     for (std::size_t r = 0; r < 3; r++) {
         for (std::size_t c = 0; c < 3; c++) {
             std::size_t curColumn = symbolIndex + c - 1;
