@@ -181,17 +181,20 @@ SchematicProcessing::processNumbersAroundSymbol(
     // Also, the symbol character is checked twice over the whole process.
     // Once in this loop and once before this function
     // (processNumbersAroundSymbol) is called.
-    for (std::size_t r = 0; r < 3; r++) {
-        for (std::size_t c = 0; c < 3; c++) {
-            std::size_t curColumn = symbolIndex + c - 1;
+    const std::size_t windowWidth = 3;
+    const std::size_t windowHeight = 3;
+    for (std::size_t i = 0; i < windowWidth * windowHeight; i++) {
+        std::size_t r = i / windowWidth;
+        std::size_t c = i % windowWidth;
 
-            if (!blacklistBuffer.at(r).at(curColumn) &&
-                TextToInt::charToInt(buffer.at(r).at(curColumn)) != -1) {
+        std::size_t curColumn = symbolIndex + c - 1;
 
-                int num = findCompleteNumber(buffer.at(r),
-                                             blacklistBuffer.at(r), curColumn);
-                localSum += num;
-            }
+        if (!blacklistBuffer.at(r).at(curColumn) &&
+            TextToInt::charToInt(buffer.at(r).at(curColumn)) != -1) {
+
+            int num = findCompleteNumber(buffer.at(r), blacklistBuffer.at(r),
+                                         curColumn);
+            localSum += num;
         }
     }
 
@@ -202,7 +205,48 @@ int
 SchematicProcessing::processPotentialGearRatio(
     const std::array<std::string, 3> &buffer,
     std::array<std::vector<bool>, 3> &blacklistBuffer,
-    std::size_t currentLineIndex, std::size_t symbolIndex) {}
+    std::size_t currentLineIndex, std::size_t symbolIndex) {
+    int gearRatio = 0;
+
+    if (buffer.at(currentLineIndex).at(symbolIndex) != '*') {
+        return 0;
+    }
+
+    std::array<int, 2> gearRatioMembers;
+    std::size_t ratioMemberCount = 0;
+
+    const std::size_t windowWidth = 3;
+    const std::size_t windowHeight = 3;
+    for (std::size_t i = 0; i < windowWidth * windowHeight; i++) {
+        std::size_t r = i / windowWidth;
+        std::size_t c = i % windowWidth;
+
+        std::size_t curColumn = symbolIndex + c - 1;
+
+        if (!blacklistBuffer.at(r).at(curColumn) &&
+            TextToInt::charToInt(buffer.at(r).at(curColumn)) != -1) {
+
+            if (ratioMemberCount == 2) {
+                // Found a third value. This is not a gear of interest
+                // Increment ratioMemberCount to indicate that more than
+                // two numbers are found.
+                ratioMemberCount++;
+                break;
+            }
+
+            int num = findCompleteNumber(buffer.at(r), blacklistBuffer.at(r),
+                                         curColumn);
+
+            gearRatioMembers.at(ratioMemberCount++) = num;
+        }
+    }
+
+    if (ratioMemberCount == 2) {
+        gearRatio = gearRatioMembers.at(0) * gearRatioMembers.at(1);
+    }
+
+    return gearRatio;
+}
 
 int
 SchematicProcessing::findCompleteNumber(const std::string &line,

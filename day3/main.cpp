@@ -12,10 +12,16 @@ main(int argc, char **argv) {
     auto fileReader = std::make_shared<FileReader>(argv[1]);
     SchematicProcessing schematicProcessing(fileReader, '.');
 
+    std::cout << "processNumbersAroundSymbol" << std::endl;
     int sum = schematicProcessing.processSchematic(
         &SchematicProcessing::processNumbersAroundSymbol);
 
+    std::cout << "processPotentialGearRatio" << std::endl;
+    int sumGearRatio = schematicProcessing.processSchematic(
+        &SchematicProcessing::processPotentialGearRatio);
+
     std::cout << "sum: " << sum << std::endl;
+    std::cout << "sumGearRatio: " << sumGearRatio << std::endl;
 
     return 0;
 }
