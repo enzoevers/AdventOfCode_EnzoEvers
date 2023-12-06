@@ -2,14 +2,27 @@
 #include <iostream>
 
 void
-Almanac::parseAlmanac(std::stringstream &almanacString) {
+Almanac::parseSeedsFromAlmanac(std::stringstream &almanacString) {
+    almanacString.clear();
     almanacString.seekg(0, almanacString.beg);
 
     std::string line;
     while (std::getline(almanacString, line)) {
         if (line.find("seeds") != std::string::npos) {
-            parseSeedsFromAlmanac(line);
-        } else if (line.find("seed-to-soil") != std::string::npos) {
+            parseSeedsFromLine(line);
+            break;
+        }
+    }
+}
+
+void
+Almanac::parseMapsFromAlmanac(std::stringstream &almanacString) {
+    almanacString.clear();
+    almanacString.seekg(0, almanacString.beg);
+
+    std::string line;
+    while (std::getline(almanacString, line)) {
+        if (line.find("seed-to-soil") != std::string::npos) {
             parseMultiMap(almanacString, seedToSoil);
         } else if (line.find("soil-to-fertilizer") != std::string::npos) {
             parseMultiMap(almanacString, soilToFertilizer);
@@ -28,7 +41,7 @@ Almanac::parseAlmanac(std::stringstream &almanacString) {
 }
 
 void
-Almanac::parseSeedsFromAlmanac(const std::string &line) {
+Almanac::parseSeedsFromLine(const std::string &line) {
     seedIds.clear();
     seedIds.shrink_to_fit();
 
@@ -95,4 +108,17 @@ Almanac::getLocationFromSeed(uint64_t seedId) {
     uint64_t locationId = humidityToLocation.map(humidityId);
 
     return locationId;
+}
+
+uint64_t
+Almanac::getSeedFromLocation(uint64_t locationId) {
+    uint64_t humidityId = humidityToLocation.rmap(locationId);
+    uint64_t temperatureId = temperatureToHumidity.rmap(humidityId);
+    uint64_t lightId = lightToTemperature.rmap(temperatureId);
+    uint64_t waterId = waterToLight.rmap(lightId);
+    uint64_t fertilizerId = fertilizerToWater.rmap(waterId);
+    uint64_t soilId = soilToFertilizer.rmap(fertilizerId);
+    uint64_t seedId = seedToSoil.rmap(soilId);
+
+    return seedId;
 }

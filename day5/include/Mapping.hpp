@@ -23,10 +23,15 @@ struct Mapping {
     uint64_t getSrcEndId() { return srcStartId + range - 1; }
     uint64_t getDstEndId() { return dstStartId + range - 1; }
     int64_t getSrcToDstOffset() {
+        // TODO: Perform bound checks
         return (int64_t) dstStartId - (int64_t) srcStartId;
     }
+    int64_t getDstToSrcOffset() {
+        // TODO: Perform bound checks
+        return (int64_t) srcStartId - (int64_t) dstStartId;
+    }
 
-    bool isInMappedRange(uint64_t srcId) {
+    bool srcIdIsInMappedRange(uint64_t srcId) {
         bool inRange = false;
         if (srcId >= srcStartId && srcId <= getSrcEndId()) {
             inRange = true;
@@ -34,12 +39,31 @@ struct Mapping {
         return inRange;
     }
 
+    bool dstIdIsInMappedRange(uint64_t dstId) {
+        bool inRange = false;
+        if (dstId >= dstStartId && dstId <= getDstEndId()) {
+            inRange = true;
+        }
+        return inRange;
+    }
+
     uint64_t map(uint64_t srcId) {
         uint64_t dstId = srcId;
-        if (isInMappedRange(srcId)) {
+        if (srcIdIsInMappedRange(srcId)) {
+            // TODO: Perform bound checks
             dstId = (uint64_t) ((int64_t) srcId + getSrcToDstOffset());
         }
 
         return dstId;
+    }
+
+    uint64_t rmap(uint64_t dstId) {
+        uint64_t srcId = dstId;
+        if (dstIdIsInMappedRange(srcId)) {
+            // TODO: Perform bound checks
+            srcId = (uint64_t) ((int64_t) dstId + getDstToSrcOffset());
+        }
+
+        return srcId;
     }
 };
