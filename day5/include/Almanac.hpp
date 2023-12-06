@@ -21,4 +21,6 @@ class Almanac {
     uint64_t getLocationFromSeed(uint64_t seedId);
 
     void parseSeedsFromAlmanac(const std::string &line);
+    void parseMultiMap(std::stringstream &almanacString, MultiMap &multiMap);
+    Mapping parseMapping(const std::string &line);
 };

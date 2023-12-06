@@ -1,4 +1,5 @@
-#include "testMapping.hpp"
+#include "./testAlmanac_parseMapping.hpp"
+#include "./testMapping.hpp"
 #include "gtest/gtest.h"
 
 int

@@ -7,6 +7,8 @@ struct Mapping {
     uint64_t dstStartId;
     int range;
 
+    Mapping() {}
+
     Mapping(uint64_t srcStartId, uint64_t dstStartId, uint64_t range)
         : srcStartId(srcStartId), dstStartId(dstStartId), range(range) {
         if (range == 0) {

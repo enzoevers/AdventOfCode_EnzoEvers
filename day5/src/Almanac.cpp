@@ -9,6 +9,8 @@ Almanac::parseAlmanac(std::stringstream &almanacString) {
     while (std::getline(almanacString, line)) {
         if (line.find("seeds") != std::string::npos) {
             parseSeedsFromAlmanac(line);
+        } else if (line.find("seed-to-soil") != std::string::npos) {
+            parseMultiMap(almanacString, seedToSoil);
         }
     }
 }
@@ -39,6 +41,32 @@ Almanac::parseSeedsFromAlmanac(const std::string &line) {
             endIndex = line.find(' ', startIndex + 1);
         }
     }
+}
+
+void
+Almanac::parseMultiMap(std::stringstream &almanacString, MultiMap &multiMap) {
+    std::string line;
+    std::getline(almanacString, line);
+
+    while (!line.empty()) {
+
+        std::getline(almanacString, line);
+    }
+}
+
+Mapping
+Almanac::parseMapping(const std::string &line) {
+
+    std::size_t firstSpaceIndex = line.find(' ');
+    std::size_t secondSpaceIndex = line.find(' ', firstSpaceIndex + 1);
+
+    std::string dstStartIdString = line.substr(0, firstSpaceIndex);
+    std::string srcStartIdString =
+        line.substr(firstSpaceIndex + 1, secondSpaceIndex - firstSpaceIndex);
+    std::string rangeString = line.substr(secondSpaceIndex + 1);
+
+    return Mapping(std::stoull(srcStartIdString), std::stoull(dstStartIdString),
+                   std::stoull(rangeString));
 }
 
 uint64_t
