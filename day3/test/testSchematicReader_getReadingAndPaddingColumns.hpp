@@ -17,7 +17,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
     std::string rowString = "123456789";
 
     // Mock a schematic of 1 line.
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
                                  testing::Return(true)))
         .WillRepeatedly(testing::Return(false));
@@ -46,7 +46,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
     std::pair<std::size_t, std::size_t> blockSize(5, 5);
     std::string rowString = "123456789";
 
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
@@ -81,7 +81,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
     std::pair<std::size_t, std::size_t> blockSize(5, 5);
     std::string rowString = "123456789";
 
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
                                  testing::Return(true)))
         .WillRepeatedly(testing::Return(false));
@@ -110,7 +110,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
     std::pair<std::size_t, std::size_t> blockSize(5, 5);
     std::string rowString = "123456789";
 
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
@@ -145,7 +145,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
     std::pair<std::size_t, std::size_t> blockSize(5, 5);
     std::string rowString = "123456789";
 
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
                                  testing::Return(true)))
         .WillRepeatedly(testing::Return(false));
@@ -174,7 +174,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns,
     std::pair<std::size_t, std::size_t> blockSize(5, 5);
     std::string rowString = "123456789";
 
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(rowString),
                                  testing::Return(true)))
         .WillRepeatedly(testing::Return(false));
@@ -206,7 +206,7 @@ TEST(SchematicReader_getReadingAndPaddingColumns, fda) {
     std::string row4 = "..%..2..";
 
     // Mock a schematic of 1 line.
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row0),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row1),

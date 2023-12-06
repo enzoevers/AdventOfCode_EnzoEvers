@@ -24,7 +24,7 @@ TEST(SchematicReader_getBlock, getSquareBlockStartingAtZeroZero) {
     std::string row4 = "..%..2..";
 
     // Mock a schematic of 1 line.
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row0),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row1),
@@ -73,7 +73,7 @@ TEST(SchematicReader_getBlock, getNoneSquareBlockStartingAtZeroZero) {
     std::string row4 = "..%..2..";
 
     // Mock a schematic of 1 line.
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row0),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row1),
@@ -122,7 +122,7 @@ TEST(SchematicReader_getBlock, getSquareBlockStartingAtNonZeroZeroInsideFile) {
     std::string row4 = "..%..2..";
 
     // Mock a schematic of 1 line.
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row0),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row1),
@@ -187,7 +187,7 @@ TEST(SchematicReader_getBlock,
     std::string row4 = "..%..2..";
 
     // Mock a schematic of 1 line.
-    EXPECT_CALL(fileReaderMock, getNextLine(_))
+    EXPECT_CALL(fileReaderMock, getLine(_))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row0),
                                  testing::Return(true)))
         .WillOnce(testing::DoAll(testing::SetArgReferee<0>(row1),

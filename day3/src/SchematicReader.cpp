@@ -10,7 +10,7 @@ SchematicReader::SchematicReader(IFileReader &fileReader)
 void
 SchematicReader::assignSchematicDimensions() {
     std::string dummyString;
-    if (fileReader.getNextLine(dummyString)) {
+    if (fileReader.getLine(dummyString)) {
         if (dummyString.empty()) {
             throw std::length_error(
                 "Error: Schematic needs to have at least one non-empty line");
@@ -22,7 +22,7 @@ SchematicReader::assignSchematicDimensions() {
 
     // One line was already read
     size_t n = 1;
-    while (fileReader.getNextLine(dummyString)) {
+    while (fileReader.getLine(dummyString)) {
         if (dummyString.length() != schematicDimensions.first) {
             throw std::length_error("Error: not all lines are the same length");
         }

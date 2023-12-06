@@ -27,7 +27,7 @@ FileReader::getLineCount() {
 }
 
 bool
-FileReader::getNextLine(std::string &dst) {
+FileReader::getLine(std::string &dst) {
     if (stream.eof()) {
         return false;
     }
@@ -42,7 +42,7 @@ FileReader::goToLine(std::size_t lineNumber) {
     stream.seekg(0, stream.beg);
 
     std::string dummyString;
-    for (std::size_t i; i < lineNumber && getNextLine(dummyString); i++) {
+    for (std::size_t i; i < lineNumber && getLine(dummyString); i++) {
     }
 }
 
