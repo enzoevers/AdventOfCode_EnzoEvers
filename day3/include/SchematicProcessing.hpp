@@ -1,7 +1,6 @@
 #pragma once
 
 #include "./IFileReader.hpp"
-#include "./MatrixCoordinate.hpp"
 #include <memory>
 #include <vector>
 
