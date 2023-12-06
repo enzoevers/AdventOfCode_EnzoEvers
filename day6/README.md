@@ -173,3 +173,24 @@ Possible wins: $83 - 15 + 1 = 69$
 ### Total possible ways
 
 Total possible ways to win: $40 \cdot 60 \cdot 31 \cdot 69 = 5133600$
+
+## Part 2
+
+The input now is:
+
+```
+Input:
+
+Time:              53897698
+Distance:   313109012141201
+```
+
+$$
+\text{hold\_ms} = \frac{53897698 \pm \sqrt{\left(-53897698\right)^2 - \left(4 \cdot \left(313109012141201 + 1\right)\right)}}{2}
+$$
+
+$$
+\text{hold\_ms} = 6623214 \lor \text{hold\_ms} = 47274484
+$$
+
+Possible wins: $47274484 - 6623214 + 1 = 40651271$
