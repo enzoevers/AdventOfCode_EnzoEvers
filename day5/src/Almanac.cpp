@@ -15,6 +15,9 @@ Almanac::parseAlmanac(std::stringstream &almanacString) {
 
 void
 Almanac::parseSeedsFromAlmanac(const std::string &line) {
+    seedIds.clear();
+    seedIds.shrink_to_fit();
+
     std::size_t startIndex = line.find(' ');
     std::size_t endIndex = line.find(' ', startIndex + 1);
     while (startIndex != std::string::npos) {
