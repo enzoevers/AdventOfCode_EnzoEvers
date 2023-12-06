@@ -95,7 +95,12 @@ printBlacklist(std::array<std::vector<bool>, 3> &blacklistBuffer) {
 }
 
 int
-SchematicProcessing::processSchematic() {
+SchematicProcessing::processSchematic(
+    std::function<int(const std::array<std::string, 3> &buffer,
+                      std::array<std::vector<bool>, 3> &blacklistBuffer,
+                      std::size_t currentLineIndex, std::size_t symbolIndex)>
+        symbolBlockProcessor) {
+
     runningSum = 0;
 
     auto lockedFileReader = fileReader.lock();
@@ -136,8 +141,9 @@ SchematicProcessing::processSchematic() {
 
             if (curChar != ignoreCharacter &&
                 TextToInt::charToInt(curChar) == -1) {
-                processNumbersAroundSymbol(buffer, blacklistBuffer,
-                                           currentLineOfInterest, curCharIndex);
+                runningSum +=
+                    symbolBlockProcessor(buffer, blacklistBuffer,
+                                         currentLineOfInterest, curCharIndex);
             }
         }
 
@@ -160,11 +166,13 @@ SchematicProcessing::processSchematic() {
     return runningSum;
 }
 
-void
+int
 SchematicProcessing::processNumbersAroundSymbol(
     const std::array<std::string, 3> &buffer,
     std::array<std::vector<bool>, 3> &blacklistBuffer,
     std::size_t currentLineIndex, std::size_t symbolIndex) {
+
+    int localSum = 0;
 
     // Note that this isn't the most optimal with regard to caching
     // since the last read line is always the currentLineIndex while
@@ -182,11 +190,19 @@ SchematicProcessing::processNumbersAroundSymbol(
 
                 int num = findCompleteNumber(buffer.at(r),
                                              blacklistBuffer.at(r), curColumn);
-                runningSum += num;
+                localSum += num;
             }
         }
     }
+
+    return localSum;
 }
+
+int
+SchematicProcessing::processPotentialGearRatio(
+    const std::array<std::string, 3> &buffer,
+    std::array<std::vector<bool>, 3> &blacklistBuffer,
+    std::size_t currentLineIndex, std::size_t symbolIndex) {}
 
 int
 SchematicProcessing::findCompleteNumber(const std::string &line,

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "./IFileReader.hpp"
+#include <functional>
 #include <memory>
 #include <vector>
 
@@ -31,14 +32,25 @@ class SchematicProcessing {
     SchematicProcessing(std::shared_ptr<IFileReader> fileReader,
                         const char ignoreCharacter);
 
-    int processSchematic();
+    int processSchematic(
+        std::function<int(const std::array<std::string, 3> &buffer,
+                          std::array<std::vector<bool>, 3> &blacklistBuffer,
+                          std::size_t currentLineIndex,
+                          std::size_t symbolIndex)>
+            symbolBlockProcessor);
 
-    void processNumbersAroundSymbol(
+    static int processNumbersAroundSymbol(
         const std::array<std::string, 3> &buffer,
         std::array<std::vector<bool>, 3> &blacklistBuffer,
         std::size_t currentLineIndex, std::size_t symbolIndex);
 
-    int findCompleteNumber(const std::string &buffer,
-                           std::vector<bool> &blacklistBuffer,
-                           std::size_t column);
+    static int
+    processPotentialGearRatio(const std::array<std::string, 3> &buffer,
+                              std::array<std::vector<bool>, 3> &blacklistBuffer,
+                              std::size_t currentLineIndex,
+                              std::size_t symbolIndex);
+
+    static int findCompleteNumber(const std::string &buffer,
+                                  std::vector<bool> &blacklistBuffer,
+                                  std::size_t column);
 };

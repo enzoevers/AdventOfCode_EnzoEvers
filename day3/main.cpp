@@ -12,7 +12,8 @@ main(int argc, char **argv) {
     auto fileReader = std::make_shared<FileReader>(argv[1]);
     SchematicProcessing schematicProcessing(fileReader, '.');
 
-    int sum = schematicProcessing.processSchematic();
+    int sum = schematicProcessing.processSchematic(
+        &SchematicProcessing::processNumbersAroundSymbol);
 
     std::cout << "sum: " << sum << std::endl;
 
