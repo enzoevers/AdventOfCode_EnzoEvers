@@ -9,6 +9,11 @@ struct MultiMap {
      */
     std::vector<Mapping> mappings;
 
+    void clearMappings() {
+        mappings.clear();
+        mappings.shrink_to_fit();
+    }
+
     uint64_t map(uint64_t srcId) {
         uint64_t dstId = srcId;
 

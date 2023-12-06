@@ -11,6 +11,18 @@ Almanac::parseAlmanac(std::stringstream &almanacString) {
             parseSeedsFromAlmanac(line);
         } else if (line.find("seed-to-soil") != std::string::npos) {
             parseMultiMap(almanacString, seedToSoil);
+        } else if (line.find("soil-to-fertilizer") != std::string::npos) {
+            parseMultiMap(almanacString, soilToFertilizer);
+        } else if (line.find("fertilizer-to-water") != std::string::npos) {
+            parseMultiMap(almanacString, fertilizerToWater);
+        } else if (line.find("water-to-light") != std::string::npos) {
+            parseMultiMap(almanacString, waterToLight);
+        } else if (line.find("light-to-temperature") != std::string::npos) {
+            parseMultiMap(almanacString, lightToTemperature);
+        } else if (line.find("temperature-to-humidity") != std::string::npos) {
+            parseMultiMap(almanacString, temperatureToHumidity);
+        } else if (line.find("humidity-to-location") != std::string::npos) {
+            parseMultiMap(almanacString, humidityToLocation);
         }
     }
 }
@@ -45,11 +57,14 @@ Almanac::parseSeedsFromAlmanac(const std::string &line) {
 
 void
 Almanac::parseMultiMap(std::stringstream &almanacString, MultiMap &multiMap) {
+    multiMap.clearMappings();
+
     std::string line;
     std::getline(almanacString, line);
 
-    while (!line.empty()) {
-
+    while (!almanacString.eof() && !line.empty()) {
+        Mapping mapping = parseMapping(line);
+        multiMap.mappings.push_back(mapping);
         std::getline(almanacString, line);
     }
 }
@@ -70,4 +85,14 @@ Almanac::parseMapping(const std::string &line) {
 }
 
 uint64_t
-Almanac::getLocationFromSeed(uint64_t seedId) {}
+Almanac::getLocationFromSeed(uint64_t seedId) {
+    uint64_t soilId = seedToSoil.map(seedId);
+    uint64_t fertilizerId = soilToFertilizer.map(soilId);
+    uint64_t waterId = fertilizerToWater.map(fertilizerId);
+    uint64_t lightId = waterToLight.map(waterId);
+    uint64_t temperatureId = lightToTemperature.map(lightId);
+    uint64_t humidityId = temperatureToHumidity.map(temperatureId);
+    uint64_t locationId = humidityToLocation.map(humidityId);
+
+    return locationId;
+}
