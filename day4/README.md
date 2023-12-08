@@ -21,7 +21,7 @@ A card looks as shown below. Note that the amount of numbers on each side of the
 Card 1: 41 48 83 86 17 | 83 86  6 31 17  9 48 53
 ```
 
-The number of points of a card is $2^{matchedWinningNumbers - 1}$.
+The number of points of a card depends on the matched winning number (W): $2^{W - 1}$.
 
 The program will read the input line by line to process a single card.
 

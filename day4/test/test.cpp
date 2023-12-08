@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+#include "./testScratchCard_parseCardString.hpp"
 
 int
 main(int argc, char **argv) {
