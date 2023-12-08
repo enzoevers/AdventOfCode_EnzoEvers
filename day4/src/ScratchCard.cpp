@@ -54,7 +54,7 @@ ScratchCard::parseCardString(const std::string &card) {
     myNumbers = stringToSortedVector(substr, ' ');
 }
 
-uint32_t
+std::pair<uint32_t, uint32_t>
 ScratchCard::getPoints() {
     uint32_t points = 0;
     uint32_t matchCount = 0;
@@ -81,7 +81,7 @@ ScratchCard::getPoints() {
 
     points = pow(2, matchCount - 1);
 
-    return points;
+    return std::make_pair(matchCount, points);
 }
 
 //====================

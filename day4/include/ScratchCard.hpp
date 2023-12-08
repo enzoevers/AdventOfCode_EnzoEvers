@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <string>
+#include <utility>
 #include <vector>
 
 class ScratchCard {
@@ -22,5 +23,5 @@ class ScratchCard {
     }
     const std::vector<uint32_t> &getMyNumbers() const { return myNumbers; }
 
-    uint32_t getPoints();
+    std::pair<uint32_t, uint32_t> getPoints();
 };

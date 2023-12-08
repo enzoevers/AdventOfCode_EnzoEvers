@@ -1,5 +1,7 @@
+#include "./testGame_part1.hpp"
+#include "./testGame_part2.hpp"
+#include "./testScratchCard_getPoints.hpp"
 #include "./testScratchCard_parseCardString.hpp"
-#include "./testScratchCard_points.hpp"
 
 int
 main(int argc, char **argv) {

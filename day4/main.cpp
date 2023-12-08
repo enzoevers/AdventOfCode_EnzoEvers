@@ -1,7 +1,5 @@
-#include "./include/ScratchCard.hpp"
-#include <fstream>
+#include "./include/Game.hpp"
 #include <iostream>
-#include <iterator>
 
 int
 main(int argc, char **argv) {
@@ -10,17 +8,7 @@ main(int argc, char **argv) {
         return 1;
     }
 
-    ScratchCard scratchCard;
-
-    std::ifstream file(argv[1]);
-    std::string card;
-    uint32_t totalPoints = 0;
-    while (std::getline(file, card)) {
-        scratchCard.parseCardString(card);
-        totalPoints += scratchCard.getPoints();
-    }
-
-    std::cout << "totalPoints: " << totalPoints << std::endl;
+    playPart1(argv[1]);
 
     return 0;
 }
