@@ -31,4 +31,4 @@ While reading the numbers from the line they will be stored in a sorted manner.
 Card sorted 1: 17 41 48 83 86 |  6  9 17 31 48 53 83 86
 ```
 
-After this there are two sorted vectors. Now the program gets the first item from the winning number vector. The program iterates over the 'your number' vector until a match is found. It a match was found the program gets the second items from the winning number vector and continues iterating and comparing this with the 'your number' vector. This continues until the end of either of the vectors is met.
+After this there are two sorted vectors. Now the program gets the first item from the winning number vector. The program iterates over the 'your number' vector until a match is found. If a current winning number is less than the one of my numbers, the next winning number is checked instead. It a match was found the program gets the second items from the winning number vector and continues iterating and comparing this with the 'your number' vector. This continues until the end of either of the vectors is met.

@@ -1,4 +1,5 @@
 #include "./testScratchCard_parseCardString.hpp"
+#include "./testScratchCard_points.hpp"
 
 int
 main(int argc, char **argv) {

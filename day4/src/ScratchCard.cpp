@@ -1,6 +1,7 @@
 #include "../include/ScratchCard.hpp"
 #include "../include/TextToInt.hpp"
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <stdexcept>
 
@@ -55,7 +56,32 @@ ScratchCard::parseCardString(const std::string &card) {
 
 uint32_t
 ScratchCard::getPoints() {
-    return 0;
+    uint32_t points = 0;
+    uint32_t matchCount = 0;
+
+    auto curWinningNumber = winningNumbers.begin();
+    for (auto n : myNumbers) {
+        while (curWinningNumber != winningNumbers.end() &&
+               *curWinningNumber < n) {
+            // The arrays are sorted. Meaning that if
+            // curWinningNumber < n, curWinningNumber
+            // curWinningNumber will never be matched.
+            ++curWinningNumber;
+        }
+
+        if (curWinningNumber == winningNumbers.end()) {
+            break;
+        }
+
+        if (n == *curWinningNumber) {
+            ++matchCount;
+            ++curWinningNumber;
+        }
+    }
+
+    points = pow(2, matchCount - 1);
+
+    return points;
 }
 
 //====================
