@@ -42,11 +42,13 @@ ScratchCard::parseCardString(const std::string &card) {
     std::size_t endIndexMyNumbers = card.length() - 1;
 
     //--------------------
-    // Set the card vectors
+    // Set the card ID and  vectors
     //--------------------
-    std::string substr =
-        card.substr(startIndexWinningNumbers,
-                    endIndexWinningNumbers - startIndexWinningNumbers + 1);
+    std::string substr = card.substr(0, startIndexWinningNumbers - 1);
+    cardId = stringToCardId(substr);
+
+    substr = card.substr(startIndexWinningNumbers,
+                         endIndexWinningNumbers - startIndexWinningNumbers + 1);
     winningNumbers = stringToSortedVector(substr, ' ');
 
     substr = card.substr(startIndexMyNumbers,
@@ -87,6 +89,16 @@ ScratchCard::getPoints() {
 //====================
 // Private
 //====================
+uint32_t
+ScratchCard::stringToCardId(const std::string &cardIdString) {
+    std::size_t startIndex = getNextNumberIndex(cardIdString, 0);
+    std::size_t endIndex = cardIdString.length();
+
+    std::string numberStr =
+        cardIdString.substr(startIndex, endIndex - startIndex);
+    std::cout << "numberStr: " << numberStr << std::endl;
+    return std::stoul(numberStr);
+}
 
 std::vector<uint32_t>
 ScratchCard::stringToSortedVector(const std::string &numbersString,

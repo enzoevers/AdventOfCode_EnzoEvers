@@ -29,6 +29,7 @@ playPart2(const std::string &filePath) {
     std::ifstream file(filePath);
 
     uint32_t totalCards = 0;
+    std::vector<uint32_t> cardCount;
 
     std::cout << "totalCards: " << totalCards << std::endl;
 

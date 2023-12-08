@@ -41,6 +41,6 @@ First it's required to know how much matched winning numbers a card has. This in
 
 When starting from card 1 and going down (increasing ID), the IDs `<=` the current ID cannot be copied anymore.
 
-At the start of the program there is a vector that maps card IDs to their total count (1 + number of copies). The index of the map is `the card ID - 1` (card IDs start at 1). Whenever the match-count of a card is found the copy count for the next match-count number of IDs is increased by `1 * number_of_copies_of_current_card`.
+At the start of the program there is a vector that maps card IDs to their total count (1 + number of copies). The index of the map is `the card ID - first card ID`. Whenever the match-count of a card is found the copy count for the next match-count number of IDs is increased by `1 \* number_of_copies_of_current_card`.
 
 The total number of cards is then the
