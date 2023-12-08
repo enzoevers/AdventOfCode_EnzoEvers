@@ -9,6 +9,7 @@ main(int argc, char **argv) {
     }
 
     playPart1(argv[1]);
+    playPart2(argv[1]);
 
     return 0;
 }

@@ -96,7 +96,6 @@ ScratchCard::stringToCardId(const std::string &cardIdString) {
 
     std::string numberStr =
         cardIdString.substr(startIndex, endIndex - startIndex);
-    std::cout << "numberStr: " << numberStr << std::endl;
     return std::stoul(numberStr);
 }
 

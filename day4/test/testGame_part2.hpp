@@ -13,3 +13,12 @@ TEST(testGame_part2, fromExample) {
 
     ASSERT_EQ(totalCards, 30);
 }
+
+TEST(testGame_part2, mainInput) {
+    std::string absolutePath =
+        (std::filesystem::current_path() / "input.txt").string();
+
+    uint32_t totalPoints = playPart2(absolutePath);
+
+    ASSERT_EQ(totalPoints, 5095824);
+}
